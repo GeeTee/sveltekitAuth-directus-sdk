@@ -25,6 +25,7 @@
     import { Directus } from '@directus/sdk';
     const directus = new Directus('http://localhost:8055');
     setContext('directus', directus)
+    
     export let isAuthenticated
     // console.log('ML expected isAuthenticated', isAuthenticated)
     // console.log('ML expected directus', directus)
@@ -33,11 +34,13 @@
         if (isAuthenticated) {
             await directus.auth
             .refresh()
-            .then(() => {
-                getCurrentUser();
+            .then( async () => {
+                await getCurrentUser()
+                console.log('ML in start() getCurrentUser : ', user)
+                
             })
             .catch((err) => {
-                console.log("T", err);
+                console.log("Error when authenticated =>", err);
             });        
         }
 
@@ -48,9 +51,10 @@
         .read({
             fields: ["id", "first_name", "last_name", "email", "avatar"],
         })
-        .then((user) => {
+        .then( async (user) => {
             console.log('main __lay 1', user)
             $session.user.email = user.email
+            
             // u.setUser(user);
             // console.log('main __lay 2',$u)
             return user

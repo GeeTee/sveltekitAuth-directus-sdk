@@ -1,1 +1,4 @@
-<h3>Zone Confidentielle index page</h3>
+<script>
+    const page = 'Index'
+</script>
+<h3>Zone Confidentielle <span style="color: salmon">{page}</span></h3>
